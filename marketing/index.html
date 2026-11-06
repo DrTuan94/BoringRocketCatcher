@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skibidi Catch — catch rockets, dodge chaos</title>
+<meta name="description" content="The most unserious rocket game ever made. Catch rockets with robot arms, fend off worms and chickens, unlock 10 blasters and 15 rocket skins, and flex your aura on the leaderboards.">
+<meta property="og:title" content="Skibidi Catch — catch rockets, dodge chaos">
+<meta property="og:description" content="The most unserious rocket game ever made. Hand-drawn sticker art, chiptune music, zero cap.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://drtuan94.github.io/BoringRocketCatcher/marketing/">
+<meta property="og:image" content="https://drtuan94.github.io/BoringRocketCatcher/marketing/img/menu.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#4c1fc9">
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#240d4d; --sun:#ffe040; --mint:#73ffd9; --pink:#ff8ccc; --white:#fff;
+  --violet:#4c1fc9; --magenta:#f24dbf; --peach:#ff9e73;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',system-ui,sans-serif; font-weight:600; color:var(--white);
+  background:var(--violet); overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+/* animated candy backdrop */
+.bg{position:fixed;inset:0;z-index:-3;
+  background:linear-gradient(180deg,#4c1fc9 0%,#f24dbf 55%,#ff9e73 100%);
+  background-size:100% 220%; animation:bgshift 14s ease-in-out infinite alternate}
+@keyframes bgshift{from{background-position:0 0}to{background-position:0 100%}}
+.doodles{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.doodles span{position:absolute;opacity:.22;animation:floaty var(--d,8s) ease-in-out infinite alternate}
+@keyframes floaty{from{transform:translateY(0) rotate(0)}to{transform:translateY(-60px) rotate(25deg)}}
+.confetti{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;top:-20px;width:7px;height:12px;opacity:.75;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(112vh) rotate(720deg)}}
+
+.wrap{width:min(1100px,100% - 32px);margin-inline:auto}
+h1,h2,h3,.pill,.tag{font-family:'Luckiest Guy',cursive;font-weight:400;letter-spacing:.02em}
+.shadowtext{color:var(--sun);text-shadow:3px 4px 0 var(--ink)}
+
+/* nav */
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Luckiest Guy';font-size:22px;color:#fff;text-decoration:none;text-shadow:2px 3px 0 var(--ink)}
+.brand img{width:42px;height:42px;border-radius:11px;border:3px solid var(--ink)}
+nav a.link{color:#fff;text-decoration:none;font-weight:800;opacity:.92}
+nav a.link:hover{opacity:1;text-decoration:underline}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;min-height:min(86vh,760px);padding:20px 0 40px}
+.title{font-size:clamp(46px,9vw,104px);line-height:.95;margin-bottom:18px}
+.title .row{display:block}
+.title .l{display:inline-block;animation:pop .6s cubic-bezier(.2,1.6,.4,1) both, bob 2.4s ease-in-out infinite;animation-delay:calc(var(--i)*.05s), calc(1s + var(--i)*.08s);text-shadow:4px 6px 0 var(--ink)}
+@keyframes pop{from{transform:translateY(60px) scale(0);opacity:0}to{transform:none;opacity:1}}
+@keyframes bob{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-9px)}}
+.sub{font-size:clamp(18px,2.4vw,24px);font-weight:800;margin-bottom:26px;text-shadow:1px 2px 0 var(--ink);max-width:30ch}
+.cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:var(--sun);color:var(--ink);border:4px solid var(--ink);font-size:22px;text-decoration:none;box-shadow:0 6px 0 var(--ink);transition:transform .15s}
+.pill:hover{transform:translateY(-3px) scale(1.03)}
+.pill:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
+.pill.alt{background:var(--mint)}
+.pulse{animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.soon{font-size:14px;font-weight:800;opacity:.9;text-shadow:1px 1px 0 var(--ink)}
+
+/* hero art with orbiting stickers */
+.stage{position:relative;aspect-ratio:1;max-width:520px;margin-inline:auto;width:100%}
+.hero-moai{position:absolute;inset:14% 22%;width:56%;height:auto;animation:breathe 2.2s ease-in-out infinite;filter:drop-shadow(0 12px 0 rgba(36,13,77,.35));z-index:3}
+@keyframes breathe{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.07) rotate(3deg)}}
+.orb{position:absolute;left:50%;top:50%;width:0;height:0;animation:spin 9s linear infinite}
+.orb img{position:absolute;width:var(--s);left:calc(var(--s)/-2);top:calc(var(--s)/-2);transform:translateX(var(--r));animation:counter 9s linear infinite;filter:drop-shadow(0 8px 0 rgba(36,13,77,.3))}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes counter{to{transform:translateX(var(--r)) rotate(-360deg)}}
+.ring{position:absolute;left:50%;top:50%;border:5px solid rgba(255,255,255,.55);border-radius:50%;width:30%;aspect-ratio:1;transform:translate(-50%,-50%) scale(.2);opacity:0;animation:ring 3s ease-out infinite}
+@keyframes ring{0%{transform:translate(-50%,-50%) scale(.2);opacity:.9}100%{transform:translate(-50%,-50%) scale(3.2);opacity:0}}
+
+/* ticker */
+.ticker{background:var(--ink);border-block:4px solid #000;overflow:hidden;white-space:nowrap;transform:rotate(-1.2deg);margin:10px -20px 30px}
+.ticker div{display:inline-block;padding:12px 0;animation:marquee 32s linear infinite;font-weight:800}
+.ticker b{background:#e5231b;padding:4px 12px;border-radius:4px;margin-right:14px;font-family:'Luckiest Guy';font-weight:400}
+.ticker span{margin-right:40px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:44px 0}
+.h2{font-size:clamp(34px,6vw,60px);text-align:center;margin-bottom:10px;color:var(--sun);text-shadow:3px 5px 0 var(--ink)}
+.lead{text-align:center;font-size:clamp(16px,2vw,20px);font-weight:800;margin:0 auto 34px;max-width:46ch;text-shadow:1px 2px 0 var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:rgba(36,13,77,.42);border:4px solid rgba(255,255,255,.7);border-radius:26px;padding:22px 20px 24px;backdrop-filter:blur(3px);text-align:center;transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-8px) rotate(-1deg);border-color:var(--sun)}
+.card img{height:118px;width:auto;margin:-46px auto 8px;display:block;animation:wobble 3s ease-in-out infinite;filter:drop-shadow(0 8px 0 rgba(0,0,0,.25))}
+.card:nth-child(2n) img{animation-delay:-1s}.card:nth-child(3n) img{animation-delay:-2s}
+@keyframes wobble{0%,100%{transform:rotate(-5deg) translateY(0)}50%{transform:rotate(5deg) translateY(-8px)}}
+.card h3{font-size:26px;margin:14px 0 8px;color:var(--mint);text-shadow:2px 3px 0 var(--ink)}
+.card p{font-size:16px;line-height:1.45;font-weight:600}
+.cards{margin-top:54px}
+.emoji-card{font-size:68px;line-height:1.5;margin:-46px 0 0;animation:wobble 3s ease-in-out infinite}
+
+/* screens */
+.screens{display:flex;gap:26px;overflow-x:auto;padding:30px 6px 40px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.screens::-webkit-scrollbar{height:10px}.screens::-webkit-scrollbar-thumb{background:rgba(255,255,255,.5);border-radius:9px}
+.phone{width:min(250px,68vw);scroll-snap-align:center;position:relative;background:#111;border:6px solid var(--ink);border-radius:38px;padding:7px;box-shadow:0 12px 0 rgba(36,13,77,.5);animation:float 4s ease-in-out infinite}
+.phone:nth-child(2n){animation-delay:-1.3s}.phone:nth-child(3n){animation-delay:-2.6s}
+.phone img{display:block;width:100%;border-radius:30px}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+.cap{text-align:center;margin-top:10px;font-family:'Luckiest Guy';font-size:19px;color:var(--sun);text-shadow:2px 3px 0 var(--ink)}
+figure{flex:0 0 auto;scroll-snap-align:center}
+
+/* final cta */
+.final{text-align:center;padding:50px 0 70px}
+.final img.arm{width:min(260px,60vw);animation:wobble 2.4s ease-in-out infinite;filter:drop-shadow(0 10px 0 rgba(0,0,0,.25))}
+.final .h2{margin-top:8px}
+footer{background:var(--ink);padding:30px 0 40px;text-align:center;font-size:15px;font-weight:700}
+footer a{color:var(--mint);margin:0 10px;text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer p{opacity:.8;margin-top:12px}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(40px) scale(.96);transition:opacity .7s,transform .7s cubic-bezier(.2,1.2,.4,1)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;text-align:center;min-height:auto}
+  .sub{margin-inline:auto}.cta{justify-content:center}
+  .stage{max-width:380px}
+  .cards{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .cards{grid-template-columns:1fr}
+  .pill{font-size:19px;padding:12px 20px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="doodles" id="doodles"></div><div class="confetti" id="confetti"></div>
+
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#top"><img src="img/icon.png" alt="Skibidi Catch icon">Skibidi Catch</a>
+    <a class="link" href="../">Privacy &amp; Terms</a>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <h1 class="title" id="title" aria-label="Skibidi Catch">
+        <span class="row" data-t="SKIBIDI"></span><span class="row" data-t="CATCH"></span>
+      </h1>
+      <p class="sub">The most unserious rocket game ever made. Catch rockets, dodge the chaos.</p>
+      <div class="cta">
+        <a class="pill pulse" href="#features">🚀 COMING SOON</a>
+        <a class="pill alt" href="#screens">SEE IT</a>
+      </div>
+      <p class="soon" style="margin-top:14px">iPhone &amp; iPad · No ads · Play offline</p>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="ring"></div><div class="ring" style="animation-delay:1.5s"></div>
+      <img class="hero-moai" src="img/MemeMoai.png" alt="">
+      <div class="orb" style="--r:min(36vw,190px);--s:92px"><img src="img/MemeRocket.png" alt="" style="--r:min(36vw,190px);--s:92px"></div>
+      <div class="orb" style="animation-delay:-2.25s"><img src="img/MemeSkull.png" alt="" style="--r:min(36vw,190px);--s:78px"></div>
+      <div class="orb" style="animation-delay:-4.5s"><img src="img/MemeChicken.png" alt="" style="--r:min(36vw,190px);--s:88px"></div>
+      <div class="orb" style="animation-delay:-6.75s"><img src="img/ObWorm.png" alt="" style="--r:min(36vw,190px);--s:72px"></div>
+    </div>
+  </header>
+</div>
+
+<div class="ticker" aria-hidden="true"><div>
+  <b>BREAKING</b><span>Moai denies rocket landed in Ohio</span><span>Chickens demand arm rights</span><span>Worm spotted chewing the tower</span><span>Local sigma refuses to blink</span><span>Skibidi boosters spotted over Ohio</span><span>Aura farming at an all-time high</span>
+  <b>BREAKING</b><span>Moai denies rocket landed in Ohio</span><span>Chickens demand arm rights</span><span>Worm spotted chewing the tower</span><span>Local sigma refuses to blink</span><span>Skibidi boosters spotted over Ohio</span><span>Aura farming at an all-time high</span>
+</div></div>
+
+<main class="wrap">
+  <section id="features">
+    <h2 class="h2 rv">CATCH. DODGE. BLAST.</h2>
+    <p class="lead rv">Drag the robot arms, catch every falling rocket, and survive whatever hitches a ride.</p>
+    <div class="cards">
+      <article class="card rv"><img src="img/MemeRocket.png" alt="Rocket sticker"><h3>CATCH 'EM ALL</h3><p>Chain catches for combos and confetti. Every wave brings new rockets: tiny, chonky, wobbly, even ghosts.</p></article>
+      <article class="card rv"><img src="img/ObWorm.png" alt="Worm sticker"><h3>SURVIVE THE CRITTERS</h3><p>Worms, beetles and spiders latch onto your arms and gnaw. Shake them off, or shoot them off.</p></article>
+      <article class="card rv"><img src="img/MemeChicken.png" alt="Chicken sticker"><h3>DODGE THE CHAOS</h3><p>Rocks and angry chickens bounce off your arms. Miss the block and it's game over.</p></article>
+      <article class="card rv"><div class="emoji-card">🎯</div><h3>10 BLASTERS</h3><p>Bubbles, pizza, boomerang bananas, rainbow zappers and a homing meme cannon. Level them up as the waves roll.</p></article>
+      <article class="card rv"><div class="emoji-card">🚀</div><h3>15 ROCKET SKINS</h3><p>Gigachad, Sigma, Aura, Skibidi Gold and more. Hit goals to unlock them, plus fresh arm styles.</p></article>
+      <article class="card rv"><img src="img/ObTrophy.png" alt="Trophy sticker"><h3>FLEX YOUR AURA</h3><p>Daily challenge, global leaderboards, badges and a Hall of Fame. Same rockets for everyone each day.</p></article>
+    </div>
+  </section>
+
+  <section id="screens">
+    <h2 class="h2 rv">SEE IT IN ACTION</h2>
+    <p class="lead rv">Hand-drawn sticker art, chiptune music that speeds up with every stage, zero cap.</p>
+    <div class="screens rv">
+      <figure><div class="phone"><img src="img/menu.jpg" alt="Skibidi Catch menu" loading="lazy"></div><figcaption class="cap">TAP TO START</figcaption></figure>
+      <figure><div class="phone"><img src="img/play.jpg" alt="Catching rockets in wave 3" loading="lazy"></div><figcaption class="cap">CATCH 'EM ALL</figcaption></figure>
+      <figure><div class="phone"><img src="img/blasters.jpg" alt="The Blaster Lab" loading="lazy"></div><figcaption class="cap">BLASTER LAB</figcaption></figure>
+      <figure><div class="phone"><img src="img/skins.jpg" alt="The Rocket Garage" loading="lazy"></div><figcaption class="cap">ROCKET GARAGE</figcaption></figure>
+      <figure><div class="phone"><img src="img/scores.jpg" alt="The Hall of Fame" loading="lazy"></div><figcaption class="cap">HALL OF FAME</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="final">
+    <img class="arm rv" src="img/ObArm.png" alt="Robot arm giving a thumbs up">
+    <h2 class="h2 rv">READY, CHAD?</h2>
+    <p class="lead rv">The tower needs you. No cap.</p>
+    <a class="pill pulse" href="#top">🚀 COMING SOON TO THE APP STORE</a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="../">Privacy Policy</a>·<a href="../">Terms of Use</a>
+    <p>© 2026 TuanVu · Skibidi Catch is an independent entertainment app and is not affiliated with Apple.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // per-letter bouncing title
+  var i=0;
+  document.querySelectorAll('#title .row').forEach(function(row){
+    row.textContent='';
+    row.dataset.t.split('').forEach(function(ch){
+      var s=document.createElement('span'); s.className='l'; s.textContent=ch;
+      s.style.setProperty('--i',i++);
+      s.style.color=['#ffe040','#ffffff','#73ffd9','#ff8ccc'][i%4];
+      row.appendChild(s);
+    });
+  });
+  // doodles + confetti
+  var em=['⭐️','✨','💥','🚀','🔥','💀','🗿','🍕','🐔','🎉','💯','⚡️'],d=document.getElementById('doodles');
+  for(var k=0;k<18;k++){var e=document.createElement('span');e.textContent=em[k%em.length];
+    e.style.left=Math.random()*100+'%';e.style.top=Math.random()*100+'%';
+    e.style.fontSize=(18+Math.random()*20)+'px';e.style.setProperty('--d',(5+Math.random()*5)+'s');d.appendChild(e);}
+  var cf=document.getElementById('confetti'),cols=['#ffe040','#fff','#73ffd9','#ff8ccc'];
+  for(var c=0;c<26;c++){var p=document.createElement('i');p.style.left=Math.random()*100+'%';
+    p.style.background=cols[c%4];p.style.animationDuration=(6+Math.random()*7)+'s';
+    p.style.animationDelay=(-Math.random()*12)+'s';cf.appendChild(p);}
+  // reveal on scroll
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(n,j){n.style.transitionDelay=(j%3)*80+'ms';io.observe(n)});
+})();
+</script>
+</body>
+</html>
