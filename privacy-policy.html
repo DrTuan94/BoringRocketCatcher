@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skibidi Catch — Privacy Policy & Terms of Use</title>
+    <link rel="canonical" href="https://drtuan94.github.io/BoringRocketCatcher/">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #05070f;
+            --surface: rgba(255,255,255,0.04);
+            --surface-hover: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.08);
+            --border-glow: rgba(99,179,237,0.3);
+            --text: #e8eaf0;
+            --muted: #7a8299;
+            --accent: #63b3ed;
+            --accent2: #9f7aea;
+            --accent3: #f687b3;
+            --red: #fc8181;
+            --radius: 16px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ── Canvas starfield ── */
+        #stars-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Nebula blobs ── */
+        .nebula {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.18;
+            pointer-events: none;
+            z-index: 0;
+            animation: nebula-drift 20s ease-in-out infinite alternate;
+        }
+        .nebula-1 { width: 600px; height: 600px; background: radial-gradient(circle, #9f7aea, transparent 70%); top: -100px; right: -100px; animation-delay: 0s; }
+        .nebula-2 { width: 500px; height: 500px; background: radial-gradient(circle, #63b3ed, transparent 70%); bottom: 10%; left: -100px; animation-delay: -7s; }
+        .nebula-3 { width: 400px; height: 400px; background: radial-gradient(circle, #f687b3, transparent 70%); top: 50%; right: 20%; animation-delay: -14s; }
+
+        @keyframes nebula-drift {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 60px) scale(1.1); }
+        }
+
+        /* ── Progress bar ── */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+            z-index: 1000;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        /* ── Page wrapper ── */
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 100px 24px 80px;
+            position: relative;
+        }
+
+        .hero-rocket {
+            display: inline-block;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 24px;
+            animation: rocket-float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(99,179,237,0.5));
+        }
+
+        @keyframes rocket-float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50%       { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99,179,237,0.1);
+            border: 1px solid rgba(99,179,237,0.25);
+            border-radius: 999px;
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse-dot 2s ease infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #e8eaf0 0%, var(--accent) 50%, var(--accent2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        /* ── Pill nav ── */
+        .pill-nav {
+            display: inline-flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 5px;
+            backdrop-filter: blur(12px);
+        }
+
+        .pill-nav a {
+            display: inline-block;
+            padding: 9px 24px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pill-nav a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .pill-nav a span { position: relative; z-index: 1; }
+
+        .pill-nav a:hover::before,
+        .pill-nav a.active::before { opacity: 1; }
+        .pill-nav a:hover,
+        .pill-nav a.active { color: #fff; }
+
+        /* ── Scroll-reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Grid ── */
+        .body-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* ── TOC sidebar ── */
+        .toc-wrap {
+            position: sticky;
+            top: 28px;
+        }
+
+        .toc {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .toc-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .toc ul { list-style: none; }
+        .toc li + li { margin-top: 1px; }
+
+        .toc a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            color: var(--muted);
+            transition: all 0.2s ease;
+        }
+
+        .toc a::before {
+            content: '';
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+
+        .toc a:hover { color: var(--text); background: var(--surface-hover); }
+        .toc a.active {
+            color: var(--accent);
+            background: rgba(99,179,237,0.08);
+            font-weight: 600;
+        }
+        .toc a.active::before {
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+            opacity: 1;
+        }
+
+        .toc-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 14px 0;
+        }
+
+        .toc-section-head {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: 6px 10px 2px;
+            opacity: 0.7;
+        }
+
+        /* ── Cards ── */
+        .card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 44px 48px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card:last-child { margin-bottom: 0; }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(99,179,237,0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .card:hover {
+            border-color: rgba(99,179,237,0.2);
+            box-shadow: 0 0 60px rgba(99,179,237,0.07), 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* card accent line */
+        .card-accent {
+            position: absolute;
+            top: 0; left: 40px; right: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+            opacity: 0.6;
+        }
+
+        /* ── Section eyebrow ── */
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .tag-blue  { background: rgba(99,179,237,0.12); color: var(--accent); border: 1px solid rgba(99,179,237,0.2); }
+        .tag-purple{ background: rgba(159,122,234,0.12); color: var(--accent2); border: 1px solid rgba(159,122,234,0.2); }
+
+        .eff-date  { font-size: 0.8rem; color: var(--muted); }
+
+        /* ── Headings ── */
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 28px;
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 36px 0 10px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 14px;
+            border-radius: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent2));
+            flex-shrink: 0;
+        }
+
+        h3:first-of-type { margin-top: 0; }
+
+        /* ── Callout ── */
+        .callout {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: rgba(99,179,237,0.06);
+            border: 1px solid rgba(99,179,237,0.2);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .callout::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent2));
+            border-radius: 2px 0 0 2px;
+        }
+
+        .callout-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+        .callout p   { margin: 0; font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+
+        /* ── Paragraphs & lists ── */
+        p { margin: 0 0 14px; color: rgba(232,234,240,0.8); }
+        p:last-child { margin-bottom: 0; }
+
+        ul { list-style: none; margin: 0 0 16px; }
+
+        ul li {
+            position: relative;
+            padding: 8px 12px 8px 20px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+            color: rgba(232,234,240,0.75);
+            transition: background 0.2s;
+        }
+
+        ul li:hover { background: var(--surface-hover); }
+
+        ul li::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+        }
+
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: #90cdf4; text-decoration: underline; }
+
+        strong { color: var(--text); font-weight: 600; }
+
+        /* ── Back-to-top ── */
+        #back-top {
+            position: fixed;
+            bottom: 32px; right: 32px;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(99,179,237,0.12);
+            border: 1px solid rgba(99,179,237,0.25);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; color: var(--accent);
+            text-decoration: none;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(99,179,237,0.15);
+            opacity: 0; transform: translateY(12px) scale(0.9);
+            transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        #back-top.visible {
+            opacity: 1; transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        #back-top:hover {
+            box-shadow: 0 0 30px rgba(99,179,237,0.35);
+            background: rgba(99,179,237,0.2);
+            text-decoration: none;
+        }
+
+        /* ── Shooting star ── */
+        .shooting-star {
+            position: fixed;
+            width: 2px; height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+            border-radius: 1px;
+            opacity: 0;
+            z-index: 0;
+            pointer-events: none;
+            animation: shoot 1.5s linear forwards;
+        }
+
+        @keyframes shoot {
+            0%   { opacity: 0; transform: translate(0,0) rotate(215deg); }
+            5%   { opacity: 1; }
+            95%  { opacity: 1; }
+            100% { opacity: 0; transform: translate(400px, 400px) rotate(215deg); }
+        }
+
+        /* ── Mobile ── */
+        @media (max-width: 760px) {
+            .page { padding: 0 16px 80px; }
+            .hero { padding: 70px 16px 60px; }
+            .body-grid { grid-template-columns: 1fr; }
+            .toc-wrap { display: none; }
+            .card { padding: 28px 22px; border-radius: 16px; }
+            h2 { font-size: 1.5rem; }
+            #back-top { bottom: 20px; right: 20px; }
+        }
+
+        /* ── Animated gradient border for cards on section active ── */
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(99,179,237,0.06); }
+            50%       { box-shadow: 0 0 40px rgba(99,179,237,0.14); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Starfield -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- Nebula blobs -->
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+<div class="nebula nebula-3"></div>
+
+<!-- Reading progress -->
+<div id="progress-bar"></div>
+
+<div class="page">
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-rocket" role="img" aria-label="Rocket">🚀</div>
+        <div class="hero-badge"><span>Legal Documents</span></div>
+        <h1>Skibidi Catch</h1>
+        <p class="hero-sub">Privacy Policy &amp; Terms of Use</p>
+        <nav class="pill-nav" aria-label="Jump to section">
+            <a href="#privacy-policy" id="nav-privacy"><span>Privacy Policy</span></a>
+            <a href="#terms-of-use"   id="nav-terms"><span>Terms of Use</span></a>
+        </nav>
+    </header>
+
+    <div class="body-grid">
+
+        <!-- Sidebar TOC -->
+        <aside class="toc-wrap">
+            <nav class="toc reveal" aria-label="Table of contents">
+                <p class="toc-label">On this page</p>
+                <ul>
+                    <li class="toc-section-head">Privacy Policy</li>
+                    <li><a href="#pp-summary">Summary</a></li>
+                    <li><a href="#pp-local">Local Storage</a></li>
+                    <li><a href="#pp-gamecenter">Game Center</a></li>
+                    <li><a href="#pp-iap">In-App Purchases</a></li>
+                    <li><a href="#pp-tracking">Tracking &amp; Ads</a></li>
+                    <li><a href="#pp-children">Children's Privacy</a></li>
+                    <li><a href="#pp-deletion">Data Deletion</a></li>
+                    <li><a href="#pp-third-party">Third-Party Services</a></li>
+                    <li><a href="#pp-changes">Changes</a></li>
+                    <li><a href="#pp-contact">Contact</a></li>
+                    <hr class="toc-divider">
+                    <li class="toc-section-head">Terms of Use</li>
+                    <li><a href="#tu-description">App Description</a></li>
+                    <li><a href="#tu-eligibility">Eligibility</a></li>
+                    <li><a href="#tu-purchases">Purchases</a></li>
+                    <li><a href="#tu-free">Free Access</a></li>
+                    <li><a href="#tu-gamecenter">Game Center</a></li>
+                    <li><a href="#tu-acceptable">Acceptable Use</a></li>
+                    <li><a href="#tu-ip">Intellectual Property</a></li>
+                    <li><a href="#tu-references">Public References</a></li>
+                    <li><a href="#tu-updates">Updates</a></li>
+                    <li><a href="#tu-warranty">No Warranty</a></li>
+                    <li><a href="#tu-liability">Liability</a></li>
+                    <li><a href="#tu-apple">Apple App Store</a></li>
+                    <li><a href="#tu-changes">Changes</a></li>
+                    <li><a href="#tu-contact">Contact</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Content -->
+        <div class="content">
+
+            <!-- Privacy Policy -->
+            <article class="card reveal" id="privacy-policy">
+                <div class="card-accent"></div>
+                <div class="eyebrow">
+                    <span class="tag tag-blue">Privacy Policy</span>
+                    <span class="eff-date">Effective November 6, 2026</span>
+                </div>
+                <h2>Privacy Policy</h2>
+
+                <div class="callout">
+                    <span class="callout-icon">🔒</span>
+                    <p>Skibidi Catch does not collect personal information, does not track you across apps or websites, and does not sell your data. All gameplay data stays on your device.</p>
+                </div>
+
+                <h3 id="pp-summary">Summary</h3>
+                <p>This Privacy Policy explains how <strong>Skibidi Catch</strong> handles information when you use the app on iOS, iPadOS, macOS, or tvOS. The app stores gameplay preferences and progress locally on your device. If you use Apple services such as Game Center or in-app purchases, those features are handled by Apple under Apple's own privacy policies.</p>
+
+                <h3 id="pp-local">Information We Store Locally</h3>
+                <p>The app may store the following information on your device using Apple-provided local storage:</p>
+                <ul>
+                    <li>High scores and gameplay progress</li>
+                    <li>Daily challenge progress, streaks, and run counts</li>
+                    <li>Achievement unlocks</li>
+                    <li>Selected rocket skin</li>
+                    <li>Sound, music, and haptic settings</li>
+                    <li>A local cache of subscription or purchase entitlement status</li>
+                    <li>First-launch or onboarding state</li>
+                </ul>
+                <p>This information is stored locally for app functionality and is not sent to our own servers.</p>
+
+                <h3 id="pp-gamecenter">Game Center</h3>
+                <p>If you choose to use Game Center features, Apple may process information related to your Game Center account, leaderboard scores, display name, and related activity. Game Center is provided by Apple, and your use of Game Center is governed by Apple's terms and privacy policy.</p>
+                <p>You can manage Game Center from your device's Apple account settings.</p>
+
+                <h3 id="pp-iap">In-App Purchases and Subscriptions</h3>
+                <p>Skibidi Catch may offer auto-renewable subscriptions and non-consumable in-app purchases. Purchases, renewals, cancellations, refunds, billing, and transaction processing are handled by Apple through the App Store.</p>
+                <p>The app checks purchase entitlement status through Apple's StoreKit system and may store a local cache of whether an entitlement is active so the app can unlock purchased content correctly. We do not receive or store your payment card details.</p>
+
+                <h3 id="pp-tracking">Tracking and Advertising</h3>
+                <p>Skibidi Catch does not use third-party advertising SDKs, does not track you across other companies' apps or websites, and does not request permission to track under Apple's App Tracking Transparency framework.</p>
+
+                <h3 id="pp-children">Children's Privacy</h3>
+                <p>The app is not designed to collect personal information from children. Because the app does not collect personal information through our own servers, we do not knowingly collect personal information from children.</p>
+                <p>Parents and guardians can manage Game Center, App Store purchases, and device privacy settings through Apple's parental controls and Family Sharing tools.</p>
+
+                <h3 id="pp-deletion">Data Deletion</h3>
+                <p>Because gameplay progress and settings are stored locally on your device, you can delete this app data by deleting the app. Apple may separately retain information related to App Store purchases, subscriptions, Game Center, or other Apple services according to Apple's own policies.</p>
+
+                <h3 id="pp-third-party">Third-Party Services</h3>
+                <p>The app uses Apple platform services, including:</p>
+                <ul>
+                    <li>Game Center — optional leaderboards</li>
+                    <li>StoreKit and the App Store — purchases and subscriptions</li>
+                    <li>Local device storage — preferences and gameplay state</li>
+                </ul>
+                <p>Apple's privacy policy is available at <a href="https://www.apple.com/legal/privacy/">apple.com/legal/privacy</a>.</p>
+
+                <h3 id="pp-changes">Changes to This Policy</h3>
+                <p>We may update this Privacy Policy from time to time. If we make material changes, we will update the effective date above and publish the revised policy at the same location.</p>
+
+                <h3 id="pp-contact">Contact</h3>
+                <p>For privacy questions, email <a href="mailto:important041994@gmail.com">important041994@gmail.com</a> or contact the developer through the support contact listed on the app's App Store product page.</p>
+            </article>
+
+            <!-- Terms of Use -->
+            <article class="card reveal" id="terms-of-use">
+                <div class="card-accent" style="background: linear-gradient(90deg, transparent, var(--accent2), var(--accent3), transparent);"></div>
+                <div class="eyebrow">
+                    <span class="tag tag-purple">Terms of Use</span>
+                    <span class="eff-date">Effective November 6, 2026</span>
+                </div>
+                <h2>Terms of Use</h2>
+
+                <p>These Terms of Use govern your use of <strong>Skibidi Catch</strong>. By downloading, accessing, or using the app, you agree to these terms.</p>
+
+                <h3 id="tu-description">App Description</h3>
+                <p>Skibidi Catch is an arcade-style rocket game with local progress, achievements, optional Game Center leaderboards, and optional in-app purchases or subscriptions.</p>
+
+                <h3 id="tu-eligibility">Eligibility</h3>
+                <p>You may use the app only if permitted under the laws that apply to you and under the rules of the App Store platform where you downloaded the app. If you are under the age of majority where you live, use the app only with permission from a parent or guardian.</p>
+
+                <h3 id="tu-purchases">Purchases and Subscriptions</h3>
+                <p>The app may offer auto-renewable subscriptions and non-consumable in-app purchases. Purchases are processed by Apple through the App Store. Pricing, billing, renewals, cancellations, refunds, and payment issues are handled by Apple and are subject to Apple's terms.</p>
+                <p>Auto-renewable subscriptions renew automatically unless canceled at least 24 hours before the end of the current subscription period. You can manage or cancel subscriptions in your Apple account settings.</p>
+                <p>Purchased content is provided for use within the app. Purchase availability, pricing, and features may vary by country, platform, and App Store configuration.</p>
+
+                <h3 id="tu-free">Free Access and Limits</h3>
+                <p>The app may provide limited free access and may place limits on certain gameplay features for users who do not have an active subscription or purchase entitlement. These limits may change over time.</p>
+
+                <h3 id="tu-gamecenter">Game Center</h3>
+                <p>If you use Game Center features, your use of Game Center is governed by Apple's terms and privacy policy. Leaderboard scores and related Game Center activity may be visible to other Game Center users depending on your Apple account settings.</p>
+
+                <h3 id="tu-acceptable">Acceptable Use</h3>
+                <p>You agree not to:</p>
+                <ul>
+                    <li>Attempt to disrupt, reverse engineer, modify, or tamper with the app or its purchase systems</li>
+                    <li>Use cheats, automation, exploits, or unauthorized tools to manipulate scores, leaderboards, purchases, or gameplay</li>
+                    <li>Use the app in a way that violates applicable law or App Store rules</li>
+                    <li>Misrepresent your association with the developer, Apple, or any third party</li>
+                </ul>
+
+                <h3 id="tu-ip">Intellectual Property</h3>
+                <p>The app, including its code, artwork, gameplay design, text, and other content, is owned by the developer or licensed for use in the app. These terms do not transfer ownership of the app or its content to you.</p>
+                <p>You are granted a limited, personal, non-transferable, non-exclusive license to use the app for personal entertainment, subject to these terms and the App Store rules.</p>
+
+                <h3 id="tu-references">Public Figure and Company References</h3>
+                <p>Skibidi Catch is an independent entertainment app. It is not affiliated with, endorsed by, sponsored by, or approved by Apple, or any other referenced person or company. Any names, themes, or references are used for parody, commentary, or entertainment purposes.</p>
+
+                <h3 id="tu-updates">Updates and Availability</h3>
+                <p>We may update, modify, suspend, or discontinue parts of the app at any time. We are not required to continue providing any specific feature, content, challenge, leaderboard, purchase option, or platform version indefinitely.</p>
+
+                <h3 id="tu-warranty">No Warranty</h3>
+                <p>The app is provided "as is" and "as available." To the fullest extent permitted by law, we disclaim warranties of any kind, whether express, implied, or statutory, including warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not guarantee that the app will be uninterrupted, error-free, compatible with every device, or available at all times.</p>
+
+                <h3 id="tu-liability">Limitation of Liability</h3>
+                <p>To the fullest extent permitted by law, the developer will not be liable for indirect, incidental, consequential, special, exemplary, or punitive damages, or for loss of data, revenue, profits, or goodwill arising from your use of or inability to use the app. Some jurisdictions do not allow certain limitations of liability, so some of these limitations may not apply to you.</p>
+
+                <h3 id="tu-apple">Apple App Store Terms</h3>
+                <p>If you downloaded the app from the Apple App Store, Apple's terms also apply to your use of the app. In the event of a conflict between these Terms of Use and Apple's App Store terms, Apple's terms may control where required by Apple or applicable law. Apple is not responsible for providing support or maintenance for the app, except as required by applicable App Store rules.</p>
+
+                <h3 id="tu-changes">Changes to These Terms</h3>
+                <p>We may update these Terms of Use from time to time. If we make material changes, we will update the effective date above and publish the revised terms at the same location. Your continued use of the app after updated terms are published means you accept the updated terms.</p>
+
+                <h3 id="tu-contact">Contact</h3>
+                <p>For questions about these terms, email <a href="mailto:important041994@gmail.com">important041994@gmail.com</a> or contact the developer through the support contact listed on the app's App Store product page.</p>
+            </article>
+
+        </div>
+    </div>
+</div>
+
+<a href="#" id="back-top" aria-label="Back to top">↑</a>
+
+<script>
+(function () {
+    /* ── Starfield ── */
+    const canvas = document.getElementById('stars-canvas');
+    const ctx    = canvas.getContext('2d');
+    let W, H, stars = [];
+
+    function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+
+    function makeStar() {
+        return {
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.4 + 0.2,
+            a: Math.random(),
+            da: (Math.random() - 0.5) * 0.004,
+            speed: Math.random() * 0.06 + 0.01
+        };
+    }
+
+    function initStars() {
+        resize();
+        stars = Array.from({ length: 220 }, makeStar);
+    }
+
+    function drawStars() {
+        ctx.clearRect(0, 0, W, H);
+        stars.forEach(s => {
+            s.y += s.speed;
+            s.a += s.da;
+            if (s.a < 0) s.a = 0.05;
+            if (s.a > 1) s.a = 1;
+            if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(180,210,255,${s.a})`;
+            ctx.fill();
+        });
+        requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', initStars);
+    initStars();
+    drawStars();
+
+    /* ── Shooting stars ── */
+    function spawnShootingStar() {
+        const el = document.createElement('div');
+        el.className = 'shooting-star';
+        el.style.left = (20 + Math.random() * 60) + 'vw';
+        el.style.top  = (Math.random() * 40) + 'vh';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1600);
+    }
+
+    setInterval(spawnShootingStar, 4500);
+    setTimeout(spawnShootingStar, 1000);
+
+    /* ── Progress bar ── */
+    const bar = document.getElementById('progress-bar');
+    function updateProgress() {
+        const max  = document.documentElement.scrollHeight - window.innerHeight;
+        const pct  = max > 0 ? (window.scrollY / max) * 100 : 0;
+        bar.style.width = pct + '%';
+    }
+
+    /* ── Back-to-top ── */
+    const backTop = document.getElementById('back-top');
+    function updateBackTop() {
+        backTop.classList.toggle('visible', window.scrollY > 400);
+    }
+
+    /* ── Scroll-reveal ── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revObs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+    }, { threshold: 0.06 });
+    revealEls.forEach(el => revObs.observe(el));
+
+    /* ── TOC active + pill nav ── */
+    const anchors  = document.querySelectorAll('[id]');
+    const tocLinks = document.querySelectorAll('.toc a');
+    const pillLinks= document.querySelectorAll('.pill-nav a');
+
+    function updateNav() {
+        let current = '';
+        anchors.forEach(el => {
+            if (window.scrollY >= el.offsetTop - 140) current = el.id;
+        });
+
+        tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+
+        const termsTop = document.getElementById('terms-of-use').getBoundingClientRect().top;
+        pillLinks.forEach(a => {
+            const isTerms = a.getAttribute('href') === '#terms-of-use';
+            a.classList.toggle('active', termsTop < 200 ? isTerms : !isTerms);
+        });
+    }
+
+    window.addEventListener('scroll', () => { updateProgress(); updateBackTop(); updateNav(); }, { passive: true });
+    updateProgress(); updateBackTop(); updateNav();
+
+    /* ── Stagger reveal delays ── */
+    revealEls.forEach((el, i) => { el.style.transitionDelay = (i * 0.12) + 's'; });
+})();
+</script>
+</body>
+</html>
